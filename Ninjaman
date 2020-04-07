@@ -1,8 +1,8 @@
 <html>
 <head>
 	<title>NinjaMan</title>
-	<style typetext.css>
-	*{
+	<style>
+	{
 		margin: 0;
 		padding: 0;
 	}
@@ -13,7 +13,7 @@
 		display: inline-block;
 	}
 	.sushi {
-		background-color: black
+		background-color: black;
 		height: 40px;
 		width: 40px;
 		display: inline-block;
@@ -27,7 +27,7 @@
 		display: inline-block;
 	}
 	#ninjaman{
-		background-color: black
+		background-color: black;
 		height: 40px;
 		width: 40px;
 		display: inline-block;
@@ -37,9 +37,9 @@
 		top: 40px;
 	}
    </style>
-<head>
+</head>
 <body>
-</body>
+<div id="global"></div>
 <script type="text/javascript">
 		var world = [
 			[1,1,1,1,1],
@@ -48,21 +48,23 @@
 			[1,2,2,2,1],
 			[1,1,1,1,1],
 		];
-		var worldDict = [
+		var worldDict = {
 			0:'blank',
 			1:'wall',
 			2:'sushi',
-		];
+		};
 		function drawWorld(){
-			output = "";
+			let output = "";
 			for (var row = 0; row < world.length; row++){
-				output+="<div class = 'row'></div>"
+				output+="<div class = 'row'>"
 				for (var x = 0; x < world[row].length; x++){
 					output+="<div class = '"+  worldDict[world[row][x]] + "'></div>"
-				}	
+				}
+				output+="</div>";
 			}
-			document.getElementbyId('world').innerHTML=
-			output;
+			document.getElementById('global').innerHTML=output;
 		}
+		drawWorld();
 </script>
+</body>
 </html>	
