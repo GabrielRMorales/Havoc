@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>NinjaMan</title>
+	<title>ninjaman</title>
 	<style>
 	{
 		margin: 0;
@@ -20,27 +21,39 @@
 		background-image: url('sushi.png');
 		background-size: contain;
 	}
+	.ongiri {
+		background-color: black;
+		height: 40px;
+		width: 40px;
+		display: inline-block;
+		background-image: url('ongiri.png');
+		background-size: contain;
+	}
 	.blank {
 		background-color:blue;
 		height: 40px;
 		width: 40px;
 		display: inline-block;
 	}
-	#ninjaman{
+	#ninjaman {
 		background-color: black;
 		height: 40px;
 		width: 40px;
 		display: inline-block;
 		background-image: url('ninja.gif');
 		background-size: contain;
+		position: absolute;
 		left: 40px;
 		top: 40px;
 	}
    </style>
 </head>
 <body>
-<div id="global"></div>
+	<div id ="world"></div>
+	<div id="ninjaman"></div>
+</body>	
 <script type="text/javascript">
+		var gameScore = 0;
 		var world = [
 			[1,1,1,1,1],
 			[1,0,2,2,1],
@@ -52,23 +65,24 @@
 			[1,0,2,2,1],
 			[1,2,1,2,1],
 			[1,2,2,2,1],
-			[1,1,1,1,1],
+			[1,1,1,1,1]
 		];
 		var worldDict = {
 			0:'blank',
 			1:'wall',
 			2:'sushi',
+			4:'ongiri'
 		};
 		function drawWorld(){
 			var output = "";
 			for (var row = 0; row < world.length; row++){
-				output+="<div class = 'row'>"
+				output+="<div class = 'row'>";
 				for (var x = 0; x < world[row].length; x++){
-					output+="<div class = '"+  worldDict[world[row][x]] + "'></div>"
+					output+="<div class = '"+  worldDict[world[row][x]] + "'></div>";
 				}
 				output+="</div>";
 			}
-			document.getElementById('global').innerHTML=output;
+			document.getElementById('world').innerHTML=output;
 		}
 		drawWorld();
 
@@ -78,8 +92,8 @@
 		}
 
 		function drawNinjaman(){
-			document.getElementById('ninjaman').style.top = 40 + 'px';
-			document.getElementById('ninjaman').style.left = 40 +'px';
+			document.getElementById('ninjaman').style.top = ninjaman.y * 40 + 'px';
+			document.getElementById('ninjaman').style.left = ninjaman.x * 40 +'px';
 
 		}
 		drawNinjaman();
@@ -88,27 +102,45 @@
 			if(e.keyCode == 37){
 				if(world[ninjaman.y][ninjaman.x -1] != 1){
 					ninjaman.x--;
+					gameScore = gameScore +1;
+				}
+			}
+			if(e.keyCode == 38){
+				if(world[ninjaman.y-1][ninjaman.x] != 1){
+					ninjaman.y--;
+					gameScore = gameScore +1;
 				}
 			}
 			if(e.keyCode == 39){
-				if(world[ninjaman.y][ninjaman.x -1] != 1){
+				if(world[ninjaman.y][ninjaman.x +1] != 1){
 					ninjaman.x++;
+					gameScore = gameScore +1;
 				}
 			}
 			if(e.keyCode == 40){
 				if(world[ninjaman.y+1][ninjaman.x] != 1){
 					ninjaman.y++;
+					gameScore = gameScore +1;
 				}
 			}	
-			if(e.keyCode == 38){
-				if(world[ninjaman.y-1][ninjaman.x] != 1){
-					ninjaman.y--;
-				}
-			}	
+				
 			world[ninjaman.y][ninjaman.x] = 0;
 			drawNinjaman();
 			drawWorld();
 		}
+		var checkForCollisions = function(ninjaman, sushi){
+			for(var i=0, i < sushi.length; i++){
+				var distance = dist(ninjaman.x,ninjaman.y,sushi[i].x,sushi[i].y);
+				if(distance <= (ninjaman.size / 2 + sushi[i].size / 2)){
+					sushi.splice(i,1);
+					}
+				}
+		}
+		// keep score of sushi's ninjaman eats
+		//sushi = 10, ongiri = 5pt
+
+		// hacker challenges
+		// create a random world
+		// create ghosts that chase ninjaman
 </script>
-</body>
 </html>	
