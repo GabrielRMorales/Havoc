@@ -51,7 +51,7 @@
 <body>
 	<div id ="world"></div>
 	<div id="ninjaman"></div>
-</body>	
+
 <script type="text/javascript">
 		var gameScore = 0;
 		var world = [
@@ -143,4 +143,5 @@
 		// create a random world
 		// create ghosts that chase ninjaman
 </script>
+</body>	
 </html>	
